@@ -25,6 +25,22 @@ export class HeroService {
   //   return heroes;
   // }
 
+  /* GET heroes whose name contains search term */
+  searchHeroes(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+      tap((x) =>
+        x.length
+          ? this.log(`found heroes matching "${term}"`)
+          : this.log(`no heroes matching "${term}"`)
+      ),
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+    );
+  }
+
   /** DELETE: delete the hero from the server */
   deleteHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;

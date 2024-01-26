@@ -38,6 +38,7 @@ export class HeroesComponent {
       this.heroes.push(hero);
     });
   }
+
   getHeroes(): void {
     this.heroService.getHeroes().subscribe((heroes) => (this.heroes = heroes));
   }
