@@ -24,6 +24,11 @@ export class HeroesComponent {
     this.getHeroes();
   }
 
+  delete(hero: Hero): void {
+    this.heroes = this.heroes.filter((h) => h !== hero);
+    this.heroService.deleteHero(hero.id).subscribe();
+  }
+
   add(name: string): void {
     name = name.trim();
     if (!name) {
